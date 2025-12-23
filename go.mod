@@ -1,4 +1,4 @@
-module github.com/DikshaGupta942/Student_API
+module github.com/DikshaGupta942/student_API
 
 go 1.25.4
 

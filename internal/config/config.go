@@ -9,7 +9,7 @@ import (
 )
 
 type Httpserver struct {
-	Address string `yaml:"address" env_default:":8080"`
+	Address string `yaml:"address" env_default:":8082"`
 }
 
 type Config struct {
@@ -34,7 +34,7 @@ func MustLoad() *Config {
 		}
 	}
 
-	if _, err := os.stat(configPath); os.IsNotExist(err) {
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		log.Fatalf("config file does not exist: %s", configPath)
 	}
 
