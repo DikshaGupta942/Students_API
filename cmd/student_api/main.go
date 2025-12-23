@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/DikshaGupta942/student_API/internal/config"
+	"github.com/DikshaGupta942/student_API/internal/http/handlers/student"
 )
 
 func main() {
@@ -22,13 +23,8 @@ func main() {
 
 	router := http.NewServeMux()
 	//start server
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-			return
-		}
-		w.Write([]byte("Welcome to Student API"))
-	})
+	router.HandleFunc("POST /api/student", student.New())
+	//w.Write([]byte("Welcome to Student API"))
 
 	server := http.Server{
 		Addr:    cfg.Httpserver.Address,
@@ -48,7 +44,7 @@ func main() {
 		err := server.ListenAndServe()
 
 		if err != nil {
-			log.Fatal("Failed to start server:")
+			log.Fatal("Failed to start server:", err)
 		}
 	}()
 
