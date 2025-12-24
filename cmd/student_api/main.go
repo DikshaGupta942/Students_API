@@ -12,18 +12,29 @@ import (
 
 	"github.com/DikshaGupta942/student_API/internal/config"
 	"github.com/DikshaGupta942/student_API/internal/http/handlers/student"
+	"github.com/DikshaGupta942/student_API/internal/storage/sqlite"
 )
 
 func main() {
 	//local config setup
 	cfg := config.MustLoad()
 
-	//database setup
+	//database set up
+
+	//_, err := sqlite.New(cfg)
+	db, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+
+	slog.Info("Successfully connected to the database", slog.String("env", cfg.Env), slog.String("version", "1.0.0"))
+
 	//setup router
 
 	router := http.NewServeMux()
 	//start server
-	router.HandleFunc("POST /api/student", student.New())
+	router.HandleFunc("POST /api/student", student.New(db))
+	router.HandleFunc("GET /api/student/{id}", student.GetByID(db))
 	//w.Write([]byte("Welcome to Student API"))
 
 	server := http.Server{

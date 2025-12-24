@@ -20,6 +20,6 @@
 .DS_Store
 Thumbs.db
 
-storage
-comfig
+/storage
+/config
 .env
