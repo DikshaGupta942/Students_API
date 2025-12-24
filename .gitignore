@@ -23,3 +23,5 @@ Thumbs.db
 /storage
 /config
 .env
+students.db
+storage/storage.db
