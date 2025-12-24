@@ -35,6 +35,8 @@ func main() {
 	//start server
 	router.HandleFunc("POST /api/student", student.New(db))
 	router.HandleFunc("GET /api/student/{id}", student.GetByID(db))
+	router.HandleFunc("GET /api/students", student.GetAll(db))
+
 	//w.Write([]byte("Welcome to Student API"))
 
 	server := http.Server{

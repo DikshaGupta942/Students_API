@@ -102,3 +102,19 @@ func New(storage *sqlite.Sqlite) http.HandlerFunc {
 	}
 
 }
+func GetAll(storage *sqlite.Sqlite) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		students, err := storage.GetAllStudents()
+		if err != nil {
+			response.WriteJSON(
+				w,
+				http.StatusInternalServerError,
+				response.GeneralError(fmt.Errorf("failed to fetch students")),
+			)
+			return
+		}
+
+		response.WriteJSON(w, http.StatusOK, students)
+	}
+}
