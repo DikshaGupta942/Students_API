@@ -32,3 +32,7 @@ EXPOSE 8082
 
 # Run the application
 CMD ["./student-api", "--config=config/local.yaml"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --spider -q http://localhost:8082/api/students || exit 1
+
