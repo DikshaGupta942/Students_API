@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "dikshagupta/students-api"
+        DOCKER_IMAGE = "gdiksha942/students-api"
     }
 
     stages {
