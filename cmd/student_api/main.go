@@ -32,6 +32,16 @@ func main() {
 	//setup router
 
 	router := http.NewServeMux()
+
+	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{
+		"message": "Students API is running",
+		"version": "1.0.0"
+	}`))
+	})
+
 	//start server
 	router.HandleFunc("POST /api/student", student.New(db))
 	router.HandleFunc("GET /api/student/{id}", student.GetByID(db))
