@@ -1,0 +1,5 @@
+env: "stage"
+storage_path: "storage/stage.db"
+http_server:
+  address: ":8082"
+  timeout: 5s
