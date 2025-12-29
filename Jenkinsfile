@@ -37,11 +37,24 @@ pipeline {
                 sh 'docker push $DOCKER_IMAGE:latest'
             }
         }
+
+        stage('Deploy Container') {
+            steps {
+                sh '''
+                  docker rm -f students-api || true
+                  docker pull gdiksha942/students-api:latest
+                  docker run -d \
+                    -p 8081:8082 \
+                    --name students-api \
+                    gdiksha942/students-api:latest
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'Docker image pushed successfully!'
+            echo 'Docker image built, pushed and deployed successfully!'
         }
         failure {
             echo 'Pipeline failed.'
