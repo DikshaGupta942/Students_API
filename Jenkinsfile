@@ -40,19 +40,18 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                echo "Stopping old container if exists..."
-                docker ps -q --filter "publish=8081" | xargs -r docker stop
-                docker ps -aq --filter "publish=8081" | xargs -r docker rm
+          echo "Stopping old container if exists..."
+          docker rm -f students-api || true
 
-                echo "Pulling latest image..."
-                docker pull gdiksha942/students-api:latest
+          echo "Pulling latest image..."
+          docker pull gdiksha942/students-api:latest
 
-                echo "Starting new container..."
-                docker run -d \
-                    -p 8081:8082 \
-                    --name students-api \
-                    gdiksha942/students-api:latest
-                '''
+          echo "Starting new container..."
+          docker run -d \
+            -p 8081:8082 \
+            --name students-api \
+            gdiksha942/students-api:latest
+        '''
             }
         }
     }
