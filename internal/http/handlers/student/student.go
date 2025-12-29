@@ -88,7 +88,7 @@ func New(storage *sqlite.Sqlite) http.HandlerFunc {
 			response.WriteJSON(
 				w,
 				http.StatusInternalServerError,
-				response.GeneralError(fmt.Errorf("failed to create student")),
+				response.GeneralError(fmt.Errorf("failed to create new student")),
 			)
 			return
 		}
