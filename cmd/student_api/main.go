@@ -19,6 +19,9 @@ func main() {
 	//local config setup
 	cfg := config.MustLoad()
 
+	log.Printf("env=%s", cfg.Env)
+	// server start code
+
 	//database set up
 
 	//_, err := sqlite.New(cfg)

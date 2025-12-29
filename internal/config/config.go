@@ -20,23 +20,47 @@ type Config struct {
 func MustLoad() *Config {
 	env := os.Getenv("APP_ENV")
 	if env == "" {
-		env = "local"
+		env = "dev"
 	}
+	var configPath string
 
-	configPath := "config/" + env + ".yaml"
+	switch env {
+	case "dev":
+		configPath = "config/local.yaml"
+	case "stage":
+		configPath = "config/stage.yaml"
+	case "prod":
+		configPath = "config/prod.yaml"
+	default:
+		log.Fatalf("unknown APP_ENV: %s", env)
+	}
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		log.Fatalf("config file does not exist: %s", configPath)
 	}
 
 	var cfg Config
-
 	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
 		log.Fatalf("failed to read config: %s", err.Error())
 	}
 
 	return &cfg
 }
+
+// 	configPath := "config/" + env + ".yaml"
+
+// 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+// 		log.Fatalf("config file does not exist: %s", configPath)
+// 	}
+
+// 	var cfg Config
+
+// 	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
+// 		log.Fatalf("failed to read config: %s", err.Error())
+// 	}
+
+// 	return &cfg
+// }
 
 // func MustLoad() *Config {
 // 	var configPath string
