@@ -21,7 +21,7 @@
 Thumbs.db
 
 /storage
-/config
+config/*.local.yaml
 .env
 students.db
 storage/storage.db
