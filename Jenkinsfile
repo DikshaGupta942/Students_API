@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "gdiksha942/students-api"
+        DOCKER_IMAGE = 'gdiksha942/students-api'
     }
 
     stages {
-
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -41,9 +40,15 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                  docker rm -f students-api || true
-                  docker pull gdiksha942/students-api:latest
-                  docker run -d \
+                echo "Stopping old container if exists..."
+                docker ps -q --filter "publish=8081" | xargs -r docker stop
+                docker ps -aq --filter "publish=8081" | xargs -r docker rm
+
+                echo "Pulling latest image..."
+                docker pull gdiksha942/students-api:latest
+
+                echo "Starting new container..."
+                docker run -d \
                     -p 8081:8082 \
                     --name students-api \
                     gdiksha942/students-api:latest
