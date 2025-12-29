@@ -96,7 +96,7 @@ func New(storage *sqlite.Sqlite) http.HandlerFunc {
 		response.WriteJSON(
 			w,
 			http.StatusCreated,
-			map[string]string{"Success": "Student record created successfully"},
+			map[string]string{"Success": "Student record is added and created successfully"},
 		)
 
 	}
